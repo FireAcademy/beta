@@ -67,7 +67,7 @@ definitions:
         format: hex
         type: string
       limit:
-        example: 1337
+        example: 7
         type: integer
       offset:
         example: 1

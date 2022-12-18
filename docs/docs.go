@@ -402,7 +402,7 @@ const docTemplate = `{
                 },
                 "limit": {
                     "type": "integer",
-                    "example": 1337
+                    "example": 7
                 },
                 "offset": {
                     "type": "integer",

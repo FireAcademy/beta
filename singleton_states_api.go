@@ -14,10 +14,10 @@ type GetSingletonStatesArgs struct {
 	Launcher_id string `json:"launcher_id" format:"hex" example:"f4dd6f4ec490974f7eb98223748f47340a9e9363b4c2dccc1932cdbbc54d03fd"`
 	Inner_puzzle_hash string `json:"inner_puzzle_hash" format:"hex" example:"6b665c0e059050f71a1c3e8a7d5b58e4e1d7abbd02d937e9b5ab5abfd7f8eaba"`
 
-	Limit int `json:"limit" example:"1337"`
+	Limit int `json:"limit" example:"7"`
 	Order_by string `json:"order_by" example:"amount"`
 	Order string `json:"order" example:"desc"`
-	Offset int `json:"offset" example:"1"`
+	Offset int `json:"offset" example:"0"`
 }// @name GetSingletonStatesArgs
 
 type _ struct {
