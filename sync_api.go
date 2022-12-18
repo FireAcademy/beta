@@ -11,7 +11,9 @@ func getPeakSyncedBlock(c *fiber.Ctx) error {
 		return MakeErrorResponse(c, result.Error.Error())
 	}
 
-	return MakeSuccessResponse(c, SyncedBlockToJSON(sb), 1)
+	return MakeSuccessResponse(c, fiber.Map{
+		"synced_block": SyncedBlockToJSON(sb),
+	}, 1)
 }
 
 type GetSyncedBlockArgs struct {
@@ -30,7 +32,47 @@ func getSyncedBlock(c *fiber.Ctx) error {
 		return MakeErrorResponse(c, result.Error.Error())
 	}
 
-	return MakeSuccessResponse(c, SyncedBlockToJSON(sb), 1)
+	return MakeSuccessResponse(c, fiber.Map{
+		"synced_block": SyncedBlockToJSON(sb),
+	}, 1)
+}
+
+type GetSyncedBlocksArgs struct {
+    Start_height uint32 `json: "start"` 
+    End_height uint32 `json: "end"`   
+}
+
+func getSyncedBlocks(c *fiber.Ctx) error {
+	args := new(GetSyncedBlocksArgs)
+	if err := c.BodyParser(args); err != nil {
+        return MakeErrorResponse(c, err.Error())
+    }
+
+    if args.End_height <= args.Start_height {
+    	return MakeErrorResponse(c, "end_height less than or equal to start_height")
+    }
+    if args.End_height - args.Start_height > 100 {
+    	return MakeErrorResponse(c, "if you really need more than 100 blocks at a time, mesage us directly")
+    }
+
+	var synced_blocks []SyncedBlock
+	result := DB.Order("height asc").Find(
+		&synced_blocks,
+		"height >= ? AND height < ?",
+			args.Start_height, args.End_height,
+	)
+	if result.Error != nil {
+		return MakeErrorResponse(c, result.Error.Error())
+	}
+
+	var synced_blocks_JSON []fiber.Map
+	for _, synced_block := range synced_blocks {
+		synced_blocks_JSON = append(synced_blocks_JSON, SyncedBlockToJSON(synced_block))
+	}
+
+	return MakeSuccessResponse(c, fiber.Map{
+		"synced_blocks": synced_blocks,
+	}, int(result.RowsAffected))
 }
 
 func SetupSyncAPIRoutes(app *fiber.App) {
@@ -39,7 +81,5 @@ func SetupSyncAPIRoutes(app *fiber.App) {
 
 	app.Post("/get_synced_block", getSyncedBlock)
 
-	app.Post("/get_synced_blocks", func(c *fiber.Ctx) error {
-		return c.SendString("POST get_last_synced_block")
-	})
+	app.Post("/get_synced_blocks", getSyncedBlocks)
 }
