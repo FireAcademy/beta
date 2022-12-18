@@ -11,9 +11,7 @@ func getPeakSyncedBlock(c *fiber.Ctx) error {
 		return MakeErrorResponse(c, result.Error.Error())
 	}
 
-	return MakeSuccessResponse(c, fiber.Map{
-		"synced_block": SyncedBlockToJSON(sb),
-	}, 1)
+	return MakeSuccessResponseForSingleObject(c, "synced_block", SyncedBlockToJSON(sb))
 }
 
 type GetSyncedBlockArgs struct {
@@ -32,9 +30,7 @@ func getSyncedBlock(c *fiber.Ctx) error {
 		return MakeErrorResponse(c, result.Error.Error())
 	}
 
-	return MakeSuccessResponse(c, fiber.Map{
-		"synced_block": SyncedBlockToJSON(sb),
-	}, 1)
+	return MakeSuccessResponseForSingleObject(c, "synced_block", SyncedBlockToJSON(sb))
 }
 
 type GetSyncedBlocksArgs struct {
@@ -70,9 +66,7 @@ func getSyncedBlocks(c *fiber.Ctx) error {
 		synced_blocks_JSON = append(synced_blocks_JSON, SyncedBlockToJSON(synced_block))
 	}
 
-	return MakeSuccessResponse(c, fiber.Map{
-		"synced_blocks": synced_blocks,
-	}, int(result.RowsAffected))
+	return MakeSuccessResponseForArray(c, "synced_blocks", synced_blocks_JSON)
 }
 
 func SetupSyncAPIRoutes(app *fiber.App) {
