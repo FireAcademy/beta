@@ -24,10 +24,67 @@ const docTemplate = `{
     },
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
-    "paths": {},
+    "paths": {
+        "/get_puzzle": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "returns the stored puzzle for a given puzzle_hash",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Puzzle"
+                ],
+                "summary": "Beta stores all revealed inner puzzles of singletons. Use this method to get it from the corresponding puzzle hash. The puzzle will be returned as a hex string.",
+                "parameters": [
+                    {
+                        "description": "Puzzle Hash",
+                        "name": "puzzle_hash",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Puzzle"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Puzzle": {
+            "type": "object",
+            "properties": {
+                "puzzle": {
+                    "type": "string",
+                    "format": "hex",
+                    "example": "ff02ffff01ff02ffff01ff02ff3effff04ff02ffff04ff05ffff04ffff02ff2fff5f80ffff04ff80ffff04ffff04ffff04ff0bffff04ff17ff808080ffff01ff808080ffff01ff8080808080808080ffff04ffff01ffffff0233ff04ff0101ffff02ff02ffff03ff05ffff01ff02ff1affff04ff02ffff04ff0dffff04ffff0bff12ffff0bff2cff1480ffff0bff12ffff0bff12ffff0bff2cff3c80ff0980ffff0bff12ff0bffff0bff2cff8080808080ff8080808080ffff010b80ff0180ffff0bff12ffff0bff2cff1080ffff0bff12ffff0bff12ffff0bff2cff3c80ff0580ffff0bff12ffff02ff1affff04ff02ffff04ff07ffff04ffff0bff2cff2c80ff8080808080ffff0bff2cff8080808080ffff02ffff03ffff07ff0580ffff01ff0bffff0102ffff02ff2effff04ff02ffff04ff09ff80808080ffff02ff2effff04ff02ffff04ff0dff8080808080ffff01ff0bffff0101ff058080ff0180ff02ffff03ff0bffff01ff02ffff03ffff09ff23ff1880ffff01ff02ffff03ffff18ff81b3ff2c80ffff01ff02ffff03ffff20ff1780ffff01ff02ff3effff04ff02ffff04ff05ffff04ff1bffff04ff33ffff04ff2fffff04ff5fff8080808080808080ffff01ff088080ff0180ffff01ff04ff13ffff02ff3effff04ff02ffff04ff05ffff04ff1bffff04ff17ffff04ff2fffff04ff5fff80808080808080808080ff0180ffff01ff02ffff03ffff09ff23ffff0181e880ffff01ff02ff3effff04ff02ffff04ff05ffff04ff1bffff04ff17ffff04ffff02ffff03ffff22ffff09ffff02ff2effff04ff02ffff04ff53ff80808080ff82014f80ffff20ff5f8080ffff01ff02ff53ffff04ff818fffff04ff82014fffff04ff81b3ff8080808080ffff01ff088080ff0180ffff04ff2cff8080808080808080ffff01ff04ff13ffff02ff3effff04ff02ffff04ff05ffff04ff1bffff04ff17ffff04ff2fffff04ff5fff80808080808080808080ff018080ff0180ffff01ff04ffff04ff18ffff04ffff02ff16ffff04ff02ffff04ff05ffff04ff27ffff04ffff0bff2cff82014f80ffff04ffff02ff2effff04ff02ffff04ff818fff80808080ffff04ffff0bff2cff0580ff8080808080808080ff378080ff81af8080ff0180ff018080ffff04ffff01a0a04d9f57764f54a43e4030befb4d80026e870519aaa66334aef8304f5d0393c2ffff04ffff01ffff75ffc05968747470733a2f2f6261666b726569657175656b6879786b34643575366e77653462733378366f6c7369616b646269753467353276736a7665666f6b78686f6d6b6d712e697066732e6e667473746f726167652e6c696e6b2f80ffff68a090a1147c5d5c1f69e6d89c0cb77f3972401430a29c37755926a42b9573b98a64ffff826d75ffc05968747470733a2f2f6261666b7265696468336273697933626835686870766e6d367572357176757474373566783277697772646f62736d70686e6c3237776f726372792e697066732e6e667473746f726167652e6c696e6b2f80ffff826c7580ffff82736e01ffff82737401ffff826d68a067d8648c6c27e9cefab59ea47b0ad273ff4b7d591688dc1931e76af5fb3a228e80ffff04ffff01a0fe8a4b4e27a2e29a4d3fc7ce9d527adbcaccbab6ada3903ccf3ba9a769d2d78bffff04ffff01ff02ffff01ff02ffff01ff02ffff03ff0bffff01ff02ffff03ffff09ff05ffff1dff0bffff1effff0bff0bffff02ff06ffff04ff02ffff04ff17ff8080808080808080ffff01ff02ff17ff2f80ffff01ff088080ff0180ffff01ff04ffff04ff04ffff04ff05ffff04ffff02ff06ffff04ff02ffff04ff17ff80808080ff80808080ffff02ff17ff2f808080ff0180ffff04ffff01ff32ff02ffff03ffff07ff0580ffff01ff0bffff0102ffff02ff06ffff04ff02ffff04ff09ff80808080ffff02ff06ffff04ff02ffff04ff0dff8080808080ffff01ff0bffff0101ff058080ff0180ff018080ffff04ffff01b093c8e9237b64d8e9282a7f8e73369c671bdf4e8fa631704c58ae8aa7a8912322994e22df1b01dd8c896e13cf1683ba2dff018080ff018080808080"
+                },
+                "puzzle_hash": {
+                    "type": "string",
+                    "format": "hex",
+                    "example": "6b665c0e059050f71a1c3e8a7d5b58e4e1d7abbd02d937e9b5ab5abfd7f8eaba"
+                }
+            }
+        }
+    },
     "securityDefinitions": {
         "ApiKeyAuth": {
-            "description": "The API key can be passed in the URL (between host and /beta), as a header (X-API-Key), or as a GET parameter (?api-key=)(also works for POST requests)",
+            "description": "The API key can be passed in the URL (between base host and ` + "`" + `/beta/` + "`" + `), as a header (` + "`" + `X-API-Key` + "`" + `), or as a GET parameter at the end of the URL (` + "`" + `endpoint?api-key=` + "`" + `)(also works for POST requests)",
             "type": "apiKey",
             "name": "X-API-Key",
             "in": "header"
@@ -38,7 +95,7 @@ const docTemplate = `{
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
-	Host:             "kraken.fireacademy.io",
+	Host:             "https://kraken.fireacademy.io",
 	BasePath:         "/beta",
 	Schemes:          []string{},
 	Title:            "Beta API",

@@ -3,25 +3,25 @@ package main
 
 
 type SyncedBlock struct {
-	HeaderHash string `gorm:"column:header_hash;primary_key"`
-	Height     int64  `gorm:"column:height;NOT NULL"`
-}
+	HeaderHash string `gorm:"column:header_hash;primary_key" json:"header_hash" format:"hex" example:"9bb7135ae2b4a207807be2661007a89c8e3d0de1a58c0670da07b6099b9fedf7"`
+	Height     int64  `gorm:"column:height;NOT NULL" json:"height" format:"int64" example:2000000`
+} // @name SyncedBlock
 
 
 type SingletonState struct {
-	CoinID          string `gorm:"column:coin_id;primary_key"`
-	Melted          bool    `gorm:"column:melted;NOT NULL"`
+	CoinID          string `gorm:"column:coin_id;primary_key" json:"coin_id" format:"hex" example:"625799464319c8703ac2d0664af98cf45b9b306f7dcf717b1070d170bb5916a9"`
+	Melted          bool    `gorm:"column:melted;NOT NULL" json:"melted" example:false`
 
-	HeaderHash      string `gorm:"column:header_hash;NOT NULL"`
-	Height          int64  `gorm:"column:height;NOT NULL"`
+	HeaderHash      string `gorm:"column:header_hash;NOT NULL" json:"header_hash" format:"hex" example:"796c33c3905150e649211fdd9ed42c7c418758c30c321271973a7c792a5bd403"`
+	Height          int64  `gorm:"column:height;NOT NULL" json:"height" format:"int64" example:2174316`
 
-	ParentCoinID    string `gorm:"column:parent_coin_id;NOT NULL"`
-	PuzzleHash      string `gorm:"column:puzzle_hash;NOT NULL"`
-	Amount          int64  `gorm:"column:amount;NOT NULL"`
+	ParentCoinID    string `gorm:"column:parent_coin_id;NOT NULL" json:"parent_coin_id" format:"hex" example:"e9676e8ce096c5be27dee2fbf2120054d206e4df2de9ef59c24a651d3c558c95"`
+	PuzzleHash      string `gorm:"column:puzzle_hash;NOT NULL" json:"puzzle_hash" format:"hex" example:"0a5a9c760970ebcc094c6f9faa3d9730f066c7a8f7450841a94fc4fd59229bc2"`
+	Amount          int64  `gorm:"column:amount;NOT NULL" json:"amount" format:"int64" example:1`
 
-	LauncherID      string `gorm:"column:launcher_id;NOT NULL"`
-	InnerPuzzleHash string `gorm:"column:inner_puzzle_hash"`
-}
+	LauncherID      string `gorm:"column:launcher_id;NOT NULL" json:"launcher_id" format:"hex" example:"f4dd6f4ec490974f7eb98223748f47340a9e9363b4c2dccc1932cdbbc54d03fd"`
+	InnerPuzzleHash string `gorm:"column:inner_puzzle_hash" json:"inner_puzzle_hash" format:"hex" example:"6b665c0e059050f71a1c3e8a7d5b58e4e1d7abbd02d937e9b5ab5abfd7f8eaba"`
+} // @name SingletonState
 
 
 type Puzzle struct {
@@ -29,3 +29,7 @@ type Puzzle struct {
 	Puzzle     []byte `gorm:"column:puzzle;type:bytea;NOT NULL"`
 }
 
+type SwaggerPuzzle struct {
+	PuzzleHash string `json:"puzzle_hash" format:"hex" example:"6b665c0e059050f71a1c3e8a7d5b58e4e1d7abbd02d937e9b5ab5abfd7f8eaba"`
+	Puzzle     string`gorm:"column:puzzle;type:bytea;NOT NULL" json:"puzzle" format:"hex" example:"ff02ffff01ff02ffff01ff02ff3effff04ff02ffff04ff05ffff04ffff02ff2fff5f80ffff04ff80ffff04ffff04ffff04ff0bffff04ff17ff808080ffff01ff808080ffff01ff8080808080808080ffff04ffff01ffffff0233ff04ff0101ffff02ff02ffff03ff05ffff01ff02ff1affff04ff02ffff04ff0dffff04ffff0bff12ffff0bff2cff1480ffff0bff12ffff0bff12ffff0bff2cff3c80ff0980ffff0bff12ff0bffff0bff2cff8080808080ff8080808080ffff010b80ff0180ffff0bff12ffff0bff2cff1080ffff0bff12ffff0bff12ffff0bff2cff3c80ff0580ffff0bff12ffff02ff1affff04ff02ffff04ff07ffff04ffff0bff2cff2c80ff8080808080ffff0bff2cff8080808080ffff02ffff03ffff07ff0580ffff01ff0bffff0102ffff02ff2effff04ff02ffff04ff09ff80808080ffff02ff2effff04ff02ffff04ff0dff8080808080ffff01ff0bffff0101ff058080ff0180ff02ffff03ff0bffff01ff02ffff03ffff09ff23ff1880ffff01ff02ffff03ffff18ff81b3ff2c80ffff01ff02ffff03ffff20ff1780ffff01ff02ff3effff04ff02ffff04ff05ffff04ff1bffff04ff33ffff04ff2fffff04ff5fff8080808080808080ffff01ff088080ff0180ffff01ff04ff13ffff02ff3effff04ff02ffff04ff05ffff04ff1bffff04ff17ffff04ff2fffff04ff5fff80808080808080808080ff0180ffff01ff02ffff03ffff09ff23ffff0181e880ffff01ff02ff3effff04ff02ffff04ff05ffff04ff1bffff04ff17ffff04ffff02ffff03ffff22ffff09ffff02ff2effff04ff02ffff04ff53ff80808080ff82014f80ffff20ff5f8080ffff01ff02ff53ffff04ff818fffff04ff82014fffff04ff81b3ff8080808080ffff01ff088080ff0180ffff04ff2cff8080808080808080ffff01ff04ff13ffff02ff3effff04ff02ffff04ff05ffff04ff1bffff04ff17ffff04ff2fffff04ff5fff80808080808080808080ff018080ff0180ffff01ff04ffff04ff18ffff04ffff02ff16ffff04ff02ffff04ff05ffff04ff27ffff04ffff0bff2cff82014f80ffff04ffff02ff2effff04ff02ffff04ff818fff80808080ffff04ffff0bff2cff0580ff8080808080808080ff378080ff81af8080ff0180ff018080ffff04ffff01a0a04d9f57764f54a43e4030befb4d80026e870519aaa66334aef8304f5d0393c2ffff04ffff01ffff75ffc05968747470733a2f2f6261666b726569657175656b6879786b34643575366e77653462733378366f6c7369616b646269753467353276736a7665666f6b78686f6d6b6d712e697066732e6e667473746f726167652e6c696e6b2f80ffff68a090a1147c5d5c1f69e6d89c0cb77f3972401430a29c37755926a42b9573b98a64ffff826d75ffc05968747470733a2f2f6261666b7265696468336273697933626835686870766e6d367572357176757474373566783277697772646f62736d70686e6c3237776f726372792e697066732e6e667473746f726167652e6c696e6b2f80ffff826c7580ffff82736e01ffff82737401ffff826d68a067d8648c6c27e9cefab59ea47b0ad273ff4b7d591688dc1931e76af5fb3a228e80ffff04ffff01a0fe8a4b4e27a2e29a4d3fc7ce9d527adbcaccbab6ada3903ccf3ba9a769d2d78bffff04ffff01ff02ffff01ff02ffff01ff02ffff03ff0bffff01ff02ffff03ffff09ff05ffff1dff0bffff1effff0bff0bffff02ff06ffff04ff02ffff04ff17ff8080808080808080ffff01ff02ff17ff2f80ffff01ff088080ff0180ffff01ff04ffff04ff04ffff04ff05ffff04ffff02ff06ffff04ff02ffff04ff17ff80808080ff80808080ffff02ff17ff2f808080ff0180ffff04ffff01ff32ff02ffff03ffff07ff0580ffff01ff0bffff0102ffff02ff06ffff04ff02ffff04ff09ff80808080ffff02ff06ffff04ff02ffff04ff0dff8080808080ffff01ff0bffff0101ff058080ff0180ff018080ffff04ffff01b093c8e9237b64d8e9282a7f8e73369c671bdf4e8fa631704c58ae8aa7a8912322994e22df1b01dd8c896e13cf1683ba2dff018080ff018080808080"`
+} // @name Puzzle

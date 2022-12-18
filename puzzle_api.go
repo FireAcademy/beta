@@ -8,7 +8,17 @@ type GetPuzzleArgs struct {
     Puzzle_hash string `json: "puzzle_hash"`   
 }
 
-func getPuzzle(c *fiber.Ctx) error {
+// GetPuzzle godoc
+// @Description returns the stored puzzle for a given puzzle_hash
+// @Summary Beta stores all revealed inner puzzles of singletons. Use this method to get it from the corresponding puzzle hash. The puzzle will be returned as a hex string.
+// @Tags Puzzle
+// @Accept json
+// @Produce json
+// @Param puzzle_hash body string true "Puzzle Hash"
+// @Success 200 {object} SwaggerPuzzle
+// @Security ApiKeyAuth
+// @Router /get_puzzle [post]
+func GetPuzzle(c *fiber.Ctx) error {
 	args := new(GetPuzzleArgs)
 	if err := c.BodyParser(args); err != nil {
 		return MakeErrorResponse(c, err.Error())
@@ -28,5 +38,5 @@ func getPuzzle(c *fiber.Ctx) error {
 }
 
 func SetupPuzzleAPIRoutes(app *fiber.App) { // more like route lol
-	app.Post("/get_puzzle", getPuzzle)
+	app.Post("/get_puzzle", GetPuzzle)
 }

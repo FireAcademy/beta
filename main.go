@@ -9,8 +9,8 @@ import (
     "github.com/gofiber/fiber/v2/middleware/cors"
 
     // docs
-    // "github.com/gofiber/swagger"
-    // _ "github.com/fireacademy/beta/docs"
+    "github.com/gofiber/swagger"
+    _ "github.com/fireacademy/beta/docs"
 )
 
 //	@title			Beta API
@@ -25,7 +25,7 @@ import (
 //	@license.name	MIT
 //	@license.url	https://github.com/FireAcademy/beta/blob/master/LICENSE
 
-//	@host		kraken.fireacademy.io
+//	@host		https://kraken.fireacademy.io
 //	@BasePath	/beta
 
 //	@securityDefinitions.apikey	ApiKeyAuth
@@ -57,9 +57,9 @@ func main() {
     SetupSingletonStatesAPIRoutes(app)
     SetupPuzzleAPIRoutes(app)
 
-    // if os.Getenv("GENERATE_DOCS") == "true" {
-    //     app.Get("/swagger/*", swagger.HandlerDefault) // default
-    // }
+    if os.Getenv("GENERATE_DOCS") == "true" {
+        app.Get("/swagger/*", swagger.HandlerDefault) // default
+    }
 
 
     log.Fatalln(app.Listen(fmt.Sprintf(":%v", port)))
