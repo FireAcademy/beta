@@ -76,6 +76,7 @@ definitions:
         example: desc
         type: string
       order_by:
+        example: amount
         type: string
       parent_coin_id:
         example: e9676e8ce096c5be27dee2fbf2120054d206e4df2de9ef59c24a651d3c558c95
@@ -307,7 +308,7 @@ paths:
       - ApiKeyAuth: []
       summary: returns the stored puzzle for a given puzzle_hash
       tags:
-      - Puzzle
+      - Puzzles
   /get_singleton_states:
     post:
       consumes:

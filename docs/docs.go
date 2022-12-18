@@ -118,7 +118,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Puzzle"
+                    "Puzzles"
                 ],
                 "summary": "returns the stored puzzle for a given puzzle_hash",
                 "parameters": [
@@ -413,7 +413,8 @@ const docTemplate = `{
                     "example": "desc"
                 },
                 "order_by": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "amount"
                 },
                 "parent_coin_id": {
                     "type": "string",

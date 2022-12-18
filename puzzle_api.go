@@ -17,7 +17,7 @@ type _ struct {
 // GetPuzzle godoc
 // @Summary returns the stored puzzle for a given puzzle_hash
 // @Description Beta stores all revealed inner puzzles of singletons. Use this method to get it from the corresponding puzzle hash. The puzzle will be returned as a hex string.
-// @Tags Puzzle
+// @Tags Puzzles
 // @Accept json
 // @Produce json
 // @Param Body body GetPuzzleArgs true "The inner puzzle hash"
