@@ -18,6 +18,12 @@ func MakeSuccessResponseForArray(c *fiber.Ctx, array_name string, objects []fibe
 	})
 }
 
+type _ struct {
+	Success bool `json:"success" example:"false"`
+	Results int `json:"results" example:"0"`
+	Message string `json:"message" example:"example error message"`
+} // @name ErrorResponse
+
 func MakeErrorResponse(c *fiber.Ctx, message string) error {
 	return c.Status(500).JSON(fiber.Map{
 		"success": false,
@@ -25,3 +31,8 @@ func MakeErrorResponse(c *fiber.Ctx, message string) error {
 		"results": 0,
 	})
 }
+
+type _ struct {
+	Success bool `json:"success" example:"false"`
+	Message string `json:"message" example:"No API key provided."`
+} // @name NoAPIKeyResponse

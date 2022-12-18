@@ -4,20 +4,20 @@ package main
 
 type SyncedBlock struct {
 	HeaderHash string `gorm:"column:header_hash;primary_key" json:"header_hash" format:"hex" example:"9bb7135ae2b4a207807be2661007a89c8e3d0de1a58c0670da07b6099b9fedf7"`
-	Height     int64  `gorm:"column:height;NOT NULL" json:"height" format:"int64" example:2000000`
+	Height     int64  `gorm:"column:height;NOT NULL" json:"height" format:"int64" example:"2000000"`
 } // @name SyncedBlock
 
 
 type SingletonState struct {
 	CoinID          string `gorm:"column:coin_id;primary_key" json:"coin_id" format:"hex" example:"625799464319c8703ac2d0664af98cf45b9b306f7dcf717b1070d170bb5916a9"`
-	Melted          bool    `gorm:"column:melted;NOT NULL" json:"melted" example:false`
+	Melted          bool    `gorm:"column:melted;NOT NULL" json:"melted" example:"false"`
 
 	HeaderHash      string `gorm:"column:header_hash;NOT NULL" json:"header_hash" format:"hex" example:"796c33c3905150e649211fdd9ed42c7c418758c30c321271973a7c792a5bd403"`
-	Height          int64  `gorm:"column:height;NOT NULL" json:"height" format:"int64" example:2174316`
+	Height          int64  `gorm:"column:height;NOT NULL" json:"height" format:"int64" example:"2174316"`
 
 	ParentCoinID    string `gorm:"column:parent_coin_id;NOT NULL" json:"parent_coin_id" format:"hex" example:"e9676e8ce096c5be27dee2fbf2120054d206e4df2de9ef59c24a651d3c558c95"`
 	PuzzleHash      string `gorm:"column:puzzle_hash;NOT NULL" json:"puzzle_hash" format:"hex" example:"0a5a9c760970ebcc094c6f9faa3d9730f066c7a8f7450841a94fc4fd59229bc2"`
-	Amount          int64  `gorm:"column:amount;NOT NULL" json:"amount" format:"int64" example:1`
+	Amount          int64  `gorm:"column:amount;NOT NULL" json:"amount" format:"int64" example:"1"`
 
 	LauncherID      string `gorm:"column:launcher_id;NOT NULL" json:"launcher_id" format:"hex" example:"f4dd6f4ec490974f7eb98223748f47340a9e9363b4c2dccc1932cdbbc54d03fd"`
 	InnerPuzzleHash string `gorm:"column:inner_puzzle_hash" json:"inner_puzzle_hash" format:"hex" example:"6b665c0e059050f71a1c3e8a7d5b58e4e1d7abbd02d937e9b5ab5abfd7f8eaba"`

@@ -4,7 +4,20 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func getPeakSyncedBlock(c *fiber.Ctx) error {
+// GetPuzzle godoc
+// @Summary returns the stored puzzle for a given puzzle_hash
+// @Description Beta stores all revealed inner puzzles of singletons. Use this method to get it from the corresponding puzzle hash. The puzzle will be returned as a hex string.
+// @Tags Puzzle
+// @Accept json
+// @Produce json
+// @Param Body body GetPuzzleArgs true "The inner puzzle hash"
+// @Success 200 {object} GetPuzzleResponse
+// @Failure 401 {object} NoAPIKeyResponse
+// @Failure 500 {object} ErrorResponse
+// @Security ApiKeyAuth
+// @Router /get_peak_synced_block [get]
+// @Router /get_peak_synced_block [post]
+func GetPeakSyncedBlock(c *fiber.Ctx) error {
 	var sb SyncedBlock
 	result := DB.Order("height desc").First(&sb)
 	if result.Error != nil {
@@ -18,7 +31,7 @@ type GetSyncedBlockArgs struct {
 	Height uint32 `json: "height"`   
 }
 
-func getSyncedBlock(c *fiber.Ctx) error {
+func GetSyncedBlock(c *fiber.Ctx) error {
 	args := new(GetSyncedBlockArgs)
 	if err := c.BodyParser(args); err != nil {
 		return MakeErrorResponse(c, err.Error())
@@ -38,7 +51,7 @@ type GetSyncedBlocksArgs struct {
 	End_height uint32 `json: "end"`   
 }
 
-func getSyncedBlocks(c *fiber.Ctx) error {
+func GetSyncedBlocks(c *fiber.Ctx) error {
 	args := new(GetSyncedBlocksArgs)
 	if err := c.BodyParser(args); err != nil {
 		return MakeErrorResponse(c, err.Error())
@@ -70,10 +83,10 @@ func getSyncedBlocks(c *fiber.Ctx) error {
 }
 
 func SetupSyncAPIRoutes(app *fiber.App) {
-	app.Get("/get_peak_synced_block", getPeakSyncedBlock)
-	app.Post("/get_peak_synced_block", getPeakSyncedBlock)
+	app.Get("/get_peak_synced_block", GetPeakSyncedBlock)
+	app.Post("/get_peak_synced_block", GetPeakSyncedBlock)
 
-	app.Post("/get_synced_block", getSyncedBlock)
+	app.Post("/get_synced_block", GetSyncedBlock)
 
-	app.Post("/get_synced_blocks", getSyncedBlocks)
+	app.Post("/get_synced_blocks", GetSyncedBlocks)
 }

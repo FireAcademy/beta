@@ -1,5 +1,43 @@
 basePath: /beta
 definitions:
+  ErrorResponse:
+    properties:
+      message:
+        example: example error message
+        type: string
+      results:
+        example: 0
+        type: integer
+      success:
+        example: false
+        type: boolean
+    type: object
+  GetPuzzleArgs:
+    properties:
+      puzzle_hash:
+        example: 6b665c0e059050f71a1c3e8a7d5b58e4e1d7abbd02d937e9b5ab5abfd7f8eaba
+        type: string
+    type: object
+  GetPuzzleResponse:
+    properties:
+      result:
+        $ref: '#/definitions/Puzzle'
+      results:
+        example: 1
+        type: integer
+      success:
+        example: true
+        type: boolean
+    type: object
+  NoAPIKeyResponse:
+    properties:
+      message:
+        example: No API key provided.
+        type: string
+      success:
+        example: false
+        type: boolean
+    type: object
   Puzzle:
     properties:
       puzzle:
@@ -29,26 +67,34 @@ paths:
     post:
       consumes:
       - application/json
-      description: returns the stored puzzle for a given puzzle_hash
+      description: Beta stores all revealed inner puzzles of singletons. Use this
+        method to get it from the corresponding puzzle hash. The puzzle will be returned
+        as a hex string.
       parameters:
-      - description: Puzzle Hash
+      - description: The inner puzzle hash
         in: body
-        name: puzzle_hash
+        name: Body
         required: true
         schema:
-          type: string
+          $ref: '#/definitions/GetPuzzleArgs'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/Puzzle'
+            $ref: '#/definitions/GetPuzzleResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/NoAPIKeyResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
       security:
       - ApiKeyAuth: []
-      summary: Beta stores all revealed inner puzzles of singletons. Use this method
-        to get it from the corresponding puzzle hash. The puzzle will be returned
-        as a hex string.
+      summary: returns the stored puzzle for a given puzzle_hash
       tags:
       - Puzzle
 securityDefinitions:

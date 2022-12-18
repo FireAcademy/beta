@@ -25,7 +25,7 @@
                         "ApiKeyAuth": []
                     }
                 ],
-                "description": "returns the stored puzzle for a given puzzle_hash",
+                "description": "Beta stores all revealed inner puzzles of singletons. Use this method to get it from the corresponding puzzle hash. The puzzle will be returned as a hex string.",
                 "consumes": [
                     "application/json"
                 ],
@@ -35,15 +35,15 @@
                 "tags": [
                     "Puzzle"
                 ],
-                "summary": "Beta stores all revealed inner puzzles of singletons. Use this method to get it from the corresponding puzzle hash. The puzzle will be returned as a hex string.",
+                "summary": "returns the stored puzzle for a given puzzle_hash",
                 "parameters": [
                     {
-                        "description": "Puzzle Hash",
-                        "name": "puzzle_hash",
+                        "description": "The inner puzzle hash",
+                        "name": "Body",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/GetPuzzleArgs"
                         }
                     }
                 ],
@@ -51,7 +51,19 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/Puzzle"
+                            "$ref": "#/definitions/GetPuzzleResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/NoAPIKeyResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -59,6 +71,61 @@
         }
     },
     "definitions": {
+        "ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "example": "example error message"
+                },
+                "results": {
+                    "type": "integer",
+                    "example": 0
+                },
+                "success": {
+                    "type": "boolean",
+                    "example": false
+                }
+            }
+        },
+        "GetPuzzleArgs": {
+            "type": "object",
+            "properties": {
+                "puzzle_hash": {
+                    "type": "string",
+                    "example": "6b665c0e059050f71a1c3e8a7d5b58e4e1d7abbd02d937e9b5ab5abfd7f8eaba"
+                }
+            }
+        },
+        "GetPuzzleResponse": {
+            "type": "object",
+            "properties": {
+                "result": {
+                    "$ref": "#/definitions/Puzzle"
+                },
+                "results": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "success": {
+                    "type": "boolean",
+                    "example": true
+                }
+            }
+        },
+        "NoAPIKeyResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "example": "No API key provided."
+                },
+                "success": {
+                    "type": "boolean",
+                    "example": false
+                }
+            }
+        },
         "Puzzle": {
             "type": "object",
             "properties": {

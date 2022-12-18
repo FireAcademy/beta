@@ -5,17 +5,25 @@ import (
 )
 
 type GetPuzzleArgs struct {
-    Puzzle_hash string `json: "puzzle_hash"`   
-}
+    Puzzle_hash string `json:"puzzle_hash" example:"6b665c0e059050f71a1c3e8a7d5b58e4e1d7abbd02d937e9b5ab5abfd7f8eaba"`   
+} // @name GetPuzzleArgs
+
+type _ struct {
+	Success bool `json:"success" example:"true"`
+	Results int `json:"results" example:"1"`
+	Result SwaggerPuzzle `json:"result"`
+} // @name GetPuzzleResponse
 
 // GetPuzzle godoc
-// @Description returns the stored puzzle for a given puzzle_hash
-// @Summary Beta stores all revealed inner puzzles of singletons. Use this method to get it from the corresponding puzzle hash. The puzzle will be returned as a hex string.
+// @Summary returns the stored puzzle for a given puzzle_hash
+// @Description Beta stores all revealed inner puzzles of singletons. Use this method to get it from the corresponding puzzle hash. The puzzle will be returned as a hex string.
 // @Tags Puzzle
 // @Accept json
 // @Produce json
-// @Param puzzle_hash body string true "Puzzle Hash"
-// @Success 200 {object} SwaggerPuzzle
+// @Param Body body GetPuzzleArgs true "The inner puzzle hash"
+// @Success 200 {object} GetPuzzleResponse
+// @Failure 401 {object} NoAPIKeyResponse
+// @Failure 500 {object} ErrorResponse
 // @Security ApiKeyAuth
 // @Router /get_puzzle [post]
 func GetPuzzle(c *fiber.Ctx) error {
