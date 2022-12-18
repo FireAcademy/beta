@@ -7,10 +7,6 @@ import (
 
     "github.com/gofiber/fiber/v2"
     "github.com/gofiber/fiber/v2/middleware/cors"
-
-    // docs
-    "github.com/gofiber/swagger"
-    _ "github.com/fireacademy/beta/docs"
 )
 
 //	@title			Beta API
@@ -31,7 +27,7 @@ import (
 //	@securityDefinitions.apikey	ApiKeyAuth
 //	@in							header
 //	@name						X-API-Key
-//	@description				The API key can be passed in the URL (between base host and `/beta/`), as a header (`X-API-Key`), or as a GET parameter at the end of the URL (`endpoint?api-key=`)(also works for POST requests)
+//	@description				The API key can also be included in the URL or as a GET parameter - please see [https://docs.fireacademy.io/developers/using-api-keys](https://docs.fireacademy.io/developers/using-api-keys) for more details.
 
 func getPort() string {
     port := os.Getenv("BETA_LISTEN_PORT")
@@ -56,11 +52,6 @@ func main() {
     SetupSyncAPIRoutes(app)
     SetupSingletonStatesAPIRoutes(app)
     SetupPuzzleAPIRoutes(app)
-
-    if os.Getenv("GENERATE_DOCS") == "true" {
-        app.Get("/swagger/*", swagger.HandlerDefault) // default
-    }
-
 
     log.Fatalln(app.Listen(fmt.Sprintf(":%v", port)))
 }

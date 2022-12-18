@@ -19,8 +19,6 @@ type GetSingletonStatesArgs struct {
 	Order string `json:"order" example:"desc"`
 	Offset int `json:"offset" example:"1"`
 }// @name GetSingletonStatesArgs
-// @hidden
-// @hide GetSingletonStatesArgs
 
 type _ struct {
 	Success bool `json:"success" example:"true"`
@@ -45,6 +43,7 @@ type _ struct {
 // @Failure 500 {object} ErrorResponse
 // @Security ApiKeyAuth
 // @Router /get_singleton_states [post]
+// @Router /{api-key}/get_singleton_states [post]
 func GetSingletonStates(c *fiber.Ctx) error {
 	args := new(GetSingletonStatesArgs)
 	if err := c.BodyParser(args); err != nil {
