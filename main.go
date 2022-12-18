@@ -21,7 +21,7 @@ import (
 //	@license.name	MIT
 //	@license.url	https://github.com/FireAcademy/beta/blob/master/LICENSE
 
-//	@host		https://kraken.fireacademy.io
+//	@host		kraken.fireacademy.io
 //	@BasePath	/beta
 
 //	@securityDefinitions.apikey	ApiKeyAuth

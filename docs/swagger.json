@@ -15,7 +15,7 @@
         },
         "version": "1.0"
     },
-    "host": "https://kraken.fireacademy.io",
+    "host": "kraken.fireacademy.io",
     "basePath": "/beta",
     "paths": {
         "/get_peak_synced_block": {

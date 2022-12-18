@@ -207,7 +207,7 @@ definitions:
         format: int64
         type: integer
     type: object
-host: https://kraken.fireacademy.io
+host: kraken.fireacademy.io
 info:
   contact:
     email: y@kuhi.to
