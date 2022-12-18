@@ -11,7 +11,7 @@ import (
 
 var DB *gorm.DB
 
-func setupDB() {
+func SetupDB() {
     db_conn_string := os.Getenv("DB_CONNECTION_STRING")
     if db_conn_string == "" {
         panic("DB_CONNECTION_STRING not specified, exiting :(\n")

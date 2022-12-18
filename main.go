@@ -4,6 +4,7 @@ import (
     "os"
     "fmt"
     "log"
+
     "github.com/gofiber/fiber/v2"
     "github.com/gofiber/fiber/v2/middleware/cors"
 )
@@ -26,7 +27,8 @@ func main() {
         return c.SendString("Beta is running.")
     })
 
-    setupDB()
+    SetupDB()
+    SetupSyncAPIRoutes(app)
 
     log.Fatalln(app.Listen(fmt.Sprintf(":%v", port)))
 }
