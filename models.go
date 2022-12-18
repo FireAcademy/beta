@@ -10,7 +10,7 @@ type SyncedBlock struct {
 
 type SingletonState struct {
 	CoinID          string `gorm:"column:coin_id;primary_key"`
-	Melted          int    `gorm:"column:melted;NOT NULL"`
+	Melted          bool    `gorm:"column:melted;NOT NULL"`
 
 	HeaderHash      string `gorm:"column:header_hash;NOT NULL"`
 	Height          int64  `gorm:"column:height;NOT NULL"`

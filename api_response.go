@@ -13,9 +13,14 @@ func MakeSuccessResponseForSingleObject(c *fiber.Ctx, object_name string, object
 }
 
 func MakeSuccessResponseForArray(c *fiber.Ctx, array_name string, objects []fiber.Map) error {
+	num_objects := len(objects)
+	if num_objects < 1 {
+		num_objects = 1
+	}
+	
 	return c.Status(200).JSON(fiber.Map{
 		"success": true,
-		"cost": len(objects) * COST_PER_CREDIT,
+		"cost": num_objects * COST_PER_CREDIT,
 		array_name: objects,
 	})
 }

@@ -11,12 +11,12 @@ type GetPuzzleArgs struct {
 func getPuzzle(c *fiber.Ctx) error {
 	args := new(GetPuzzleArgs)
 	if err := c.BodyParser(args); err != nil {
-        return MakeErrorResponse(c, err.Error())
-    }
+		return MakeErrorResponse(c, err.Error())
+	}
 
-    if len(args.Puzzle_hash) != 64 {
-    	return MakeErrorResponse(c, "puzzle_hash is not 64 characters long :(")
-    }
+	if len(args.Puzzle_hash) != 64 {
+		return MakeErrorResponse(c, "puzzle_hash is not 64 characters long :(")
+	}
 
 	var p Puzzle
 	result := DB.First(&p, "puzzle_hash = ?", args.Puzzle_hash)

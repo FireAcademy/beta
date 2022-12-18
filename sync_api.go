@@ -15,14 +15,14 @@ func getPeakSyncedBlock(c *fiber.Ctx) error {
 }
 
 type GetSyncedBlockArgs struct {
-    Height uint32 `json: "height"`   
+	Height uint32 `json: "height"`   
 }
 
 func getSyncedBlock(c *fiber.Ctx) error {
 	args := new(GetSyncedBlockArgs)
 	if err := c.BodyParser(args); err != nil {
-        return MakeErrorResponse(c, err.Error())
-    }
+		return MakeErrorResponse(c, err.Error())
+	}
 
 	var sb SyncedBlock
 	result := DB.First(&sb, "height = ?", args.Height)
@@ -34,22 +34,22 @@ func getSyncedBlock(c *fiber.Ctx) error {
 }
 
 type GetSyncedBlocksArgs struct {
-    Start_height uint32 `json: "start"` 
-    End_height uint32 `json: "end"`   
+	Start_height uint32 `json: "start"` 
+	End_height uint32 `json: "end"`   
 }
 
 func getSyncedBlocks(c *fiber.Ctx) error {
 	args := new(GetSyncedBlocksArgs)
 	if err := c.BodyParser(args); err != nil {
-        return MakeErrorResponse(c, err.Error())
-    }
+		return MakeErrorResponse(c, err.Error())
+	}
 
-    if args.End_height <= args.Start_height {
-    	return MakeErrorResponse(c, "end_height less than or equal to start_height")
-    }
-    if args.End_height - args.Start_height > 100 {
-    	return MakeErrorResponse(c, "if you really need more than 100 blocks at a time, mesage us directly")
-    }
+	if args.End_height <= args.Start_height {
+		return MakeErrorResponse(c, "end_height less than or equal to start_height")
+	}
+	if args.End_height - args.Start_height > 100 {
+		return MakeErrorResponse(c, "if you really need more than 100 blocks at a time, mesage us directly")
+	}
 
 	var synced_blocks []SyncedBlock
 	result := DB.Order("height asc").Find(

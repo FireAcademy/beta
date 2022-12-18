@@ -30,6 +30,7 @@ func main() {
     SetupDB()
 
     SetupSyncAPIRoutes(app)
+    SetupSingletonStatesAPIRoutes(app)
     SetupPuzzleAPIRoutes(app)
 
     log.Fatalln(app.Listen(fmt.Sprintf(":%v", port)))
