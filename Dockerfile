@@ -8,10 +8,12 @@ COPY *.go ./
 RUN go mod download
 RUN go mod verify
 
-RUN go build -v -o beta .
+# special thanks to https://dev.to/koddr/build-a-restful-api-on-go-fiber-postgresql-jwt-and-swagger-docs-in-isolated-docker-containers-475j
+ENV CGO_ENABLED=0 GOOS=linux GOARCH=amd64
+RUN go build -ldflags="-s -w" -v -o beta .
 
-FROM alpine
+FROM scratch
 
-COPY --from=builder /beta_build/beta /usr/local/bin/beta
+COPY --from=builder /beta_build/beta /beta
 
-CMD beta
+ENTRYPOINT ["/beta"]

@@ -1,5 +1,5 @@
 # beta
 
 ```
-ghcr.io/fireacademy/beta:1.0.1
+ghcr.io/fireacademy/beta:1.0.2
 ```

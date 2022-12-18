@@ -1,0 +1,29 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "The Beta FireAcademy.io API",
+        "title": "Beta API",
+        "termsOfService": "https://fireacademy.io/terms-and-conditions.txt",
+        "contact": {
+            "name": "yakuhito",
+            "url": "https://twitter.com/yakuh1t0",
+            "email": "y@kuhi.to"
+        },
+        "license": {
+            "name": "MIT",
+            "url": "https://github.com/FireAcademy/beta/blob/master/LICENSE"
+        },
+        "version": "1.0"
+    },
+    "host": "kraken.fireacademy.io",
+    "basePath": "/beta",
+    "paths": {},
+    "securityDefinitions": {
+        "ApiKeyAuth": {
+            "description": "The API key can be passed in the URL (between host and /beta), as a header (X-API-Key), or as a GET parameter (?api-key=)(also works for POST requests)",
+            "type": "apiKey",
+            "name": "X-API-Key",
+            "in": "header"
+        }
+    }
+}

@@ -1,0 +1,24 @@
+basePath: /beta
+host: kraken.fireacademy.io
+info:
+  contact:
+    email: y@kuhi.to
+    name: yakuhito
+    url: https://twitter.com/yakuh1t0
+  description: The Beta FireAcademy.io API
+  license:
+    name: MIT
+    url: https://github.com/FireAcademy/beta/blob/master/LICENSE
+  termsOfService: https://fireacademy.io/terms-and-conditions.txt
+  title: Beta API
+  version: "1.0"
+paths: {}
+securityDefinitions:
+  ApiKeyAuth:
+    description: The API key can be passed in the URL (between host and /beta), as
+      a header (X-API-Key), or as a GET parameter (?api-key=)(also works for POST
+      requests)
+    in: header
+    name: X-API-Key
+    type: apiKey
+swagger: "2.0"
