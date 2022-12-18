@@ -43,7 +43,6 @@ type _ struct {
 // @Failure 500 {object} ErrorResponse
 // @Security ApiKeyAuth
 // @Router /get_singleton_states [post]
-// @Router /{api-key}/get_singleton_states [post]
 func GetSingletonStates(c *fiber.Ctx) error {
 	args := new(GetSingletonStatesArgs)
 	if err := c.BodyParser(args); err != nil {

@@ -306,57 +306,6 @@ const docTemplate = `{
                     }
                 }
             }
-        },
-        "/{api-key}/get_singleton_states": {
-            "post": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Singletons are like souls - when a coin dies (gets spent), they might move on to a new coin or disappear (melt). Beta views these transitions as changes of state.\nThis endpoint takes multiple optional arguments and returns the states that match the criteria. Most body parameters are self-explanatory: if they match a field of the returned struct model (e.g., 'height' or 'launcher_id'), they act as filters. Only states with the specified values will be returned.\nThe first special parameter is 'limit' - by default, this function returns 100 results at most. Use this parameter to tweak this value.\n'order_by' can be 'coin_id', 'header_hash', 'height', 'parent_coin_id', 'puzzle_hash', 'amount', 'launcher_id', or 'inner_puzzle_hash'. The default ordering is ascending, but that can be changed by setting the 'order' parameter to 'desc'.\nIf your query returns more than 100 results and you need all of them for some reasons, you can also use the 'offset' parameter.\nNote: Two singleton states CAN have the same coin id but a different 'melted' value - the primary key is a composite one: (coin_id, melted)",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Singleton States"
-                ],
-                "summary": "returns singleton states for given conditions",
-                "parameters": [
-                    {
-                        "description": "The arguments (see description for more details)",
-                        "name": "Body",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/GetSingletonStatesArgs"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/GetSingletonStatesResponse"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "schema": {
-                            "$ref": "#/definitions/NoAPIKeyResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
-                        }
-                    }
-                }
-            }
         }
     },
     "definitions": {
