@@ -18,6 +18,84 @@
     "host": "https://kraken.fireacademy.io",
     "basePath": "/beta",
     "paths": {
+        "/get_peak_synced_block": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Beta constantly syncs to the blockchain by fetching the latest blocks. This function returns information about the latest processed block (the one with the biggest 'height' value).",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Sync"
+                ],
+                "summary": "returns the peak synced block",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/GetPeakSyncedBlockResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/NoAPIKeyResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Beta constantly syncs to the blockchain by fetching the latest blocks. This function returns information about the latest processed block (the one with the biggest 'height' value).",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Sync"
+                ],
+                "summary": "returns the peak synced block",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/GetPeakSyncedBlockResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/NoAPIKeyResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/get_puzzle": {
             "post": {
                 "security": [
@@ -68,6 +146,159 @@
                     }
                 }
             }
+        },
+        "/get_singleton_states": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Singletons are like souls - when a coin dies (gets spent), they might move on to a new coin or disappear (melt). Beta views these transitions as changes of state.\nThis endpoint takes multiple optional arguments and returns the states that match the criteria. Most body parameters are self-explanatory: if they match a field of the returned struct model (e.g., 'height' or 'launcher_id'), they act as filters. Only states with the specified values will be returned.\nThe first special parameter is 'limit' - by default, this function returns 100 results at most. Use this parameter to tweak this value.\n'order_by' can be 'coin_id', 'header_hash', 'height', 'parent_coin_id', 'puzzle_hash', 'amount', 'launcher_id', or 'inner_puzzle_hash'. The default ordering is ascending, but that can be changed by setting the 'order' parameter to 'desc'.\nIf your query returns more than 100 results and you need all of them for some reasons, you can also use the 'offset' parameter.\nNote: Two singleton states CAN have the same coin id but a different 'melted' value - the primary key is a composite one: (coin_id, melted)",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Singleton States"
+                ],
+                "summary": "returns singleton states for given conditions",
+                "parameters": [
+                    {
+                        "description": "The arguments (see description for more details)",
+                        "name": "Body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/GetSingletonStatesArgs"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/GetSingletonStatesResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/NoAPIKeyResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/get_synced_block": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Beta constantly syncs to the blockchain by fetching the latest blocks. This function returns information about the block at the given height.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Sync"
+                ],
+                "summary": "returns block for given height",
+                "parameters": [
+                    {
+                        "description": "The height",
+                        "name": "Body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/GetSyncedBlockArgs"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/GetSyncedBlockResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/NoAPIKeyResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/get_synced_blocks": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Beta constantly syncs to the blockchain by fetching the latest blocks. This function returns information about the blocks with height in [start, end).",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Sync"
+                ],
+                "summary": "returns blocks for given range",
+                "parameters": [
+                    {
+                        "description": "The start and end heights",
+                        "name": "Body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/GetSyncedBlocksArgs"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/GetSyncedBlocksResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/NoAPIKeyResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -85,6 +316,22 @@
                 "success": {
                     "type": "boolean",
                     "example": false
+                }
+            }
+        },
+        "GetPeakSyncedBlockResponse": {
+            "type": "object",
+            "properties": {
+                "results": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "success": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "synced_block": {
+                    "$ref": "#/definitions/SyncedBlock"
                 }
             }
         },
@@ -113,6 +360,142 @@
                 }
             }
         },
+        "GetSingletonStatesArgs": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 1
+                },
+                "coin_id": {
+                    "type": "string",
+                    "format": "hex",
+                    "example": "625799464319c8703ac2d0664af98cf45b9b306f7dcf717b1070d170bb5916a9"
+                },
+                "header_hash": {
+                    "type": "string",
+                    "format": "hex",
+                    "example": "796c33c3905150e649211fdd9ed42c7c418758c30c321271973a7c792a5bd403"
+                },
+                "height": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 2174316
+                },
+                "inner_puzzle_hash": {
+                    "type": "string",
+                    "format": "hex",
+                    "example": "6b665c0e059050f71a1c3e8a7d5b58e4e1d7abbd02d937e9b5ab5abfd7f8eaba"
+                },
+                "launcher_id": {
+                    "type": "string",
+                    "format": "hex",
+                    "example": "f4dd6f4ec490974f7eb98223748f47340a9e9363b4c2dccc1932cdbbc54d03fd"
+                },
+                "limit": {
+                    "type": "integer",
+                    "example": 1337
+                },
+                "offset": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "order": {
+                    "type": "string",
+                    "example": "desc"
+                },
+                "order_by": {
+                    "type": "string"
+                },
+                "parent_coin_id": {
+                    "type": "string",
+                    "format": "hex",
+                    "example": "e9676e8ce096c5be27dee2fbf2120054d206e4df2de9ef59c24a651d3c558c95"
+                },
+                "puzzle_hash": {
+                    "type": "string",
+                    "format": "hex",
+                    "example": "0a5a9c760970ebcc094c6f9faa3d9730f066c7a8f7450841a94fc4fd59229bc2"
+                }
+            }
+        },
+        "GetSingletonStatesResponse": {
+            "type": "object",
+            "properties": {
+                "results": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "singleton_states": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/SingletonState"
+                    }
+                },
+                "success": {
+                    "type": "boolean",
+                    "example": true
+                }
+            }
+        },
+        "GetSyncedBlockArgs": {
+            "type": "object",
+            "properties": {
+                "height": {
+                    "type": "integer",
+                    "example": 2000000
+                }
+            }
+        },
+        "GetSyncedBlockResponse": {
+            "type": "object",
+            "properties": {
+                "results": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "success": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "synced_block": {
+                    "$ref": "#/definitions/SyncedBlock"
+                }
+            }
+        },
+        "GetSyncedBlocksArgs": {
+            "type": "object",
+            "properties": {
+                "end": {
+                    "type": "integer",
+                    "example": 2000001
+                },
+                "start": {
+                    "type": "integer",
+                    "example": 2000000
+                }
+            }
+        },
+        "GetSyncedBlocksResponse": {
+            "type": "object",
+            "properties": {
+                "results": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "success": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "synced_blocks": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/SyncedBlock"
+                    }
+                }
+            }
+        },
         "NoAPIKeyResponse": {
             "type": "object",
             "properties": {
@@ -138,6 +521,70 @@
                     "type": "string",
                     "format": "hex",
                     "example": "6b665c0e059050f71a1c3e8a7d5b58e4e1d7abbd02d937e9b5ab5abfd7f8eaba"
+                }
+            }
+        },
+        "SingletonState": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 1
+                },
+                "coin_id": {
+                    "type": "string",
+                    "format": "hex",
+                    "example": "625799464319c8703ac2d0664af98cf45b9b306f7dcf717b1070d170bb5916a9"
+                },
+                "header_hash": {
+                    "type": "string",
+                    "format": "hex",
+                    "example": "796c33c3905150e649211fdd9ed42c7c418758c30c321271973a7c792a5bd403"
+                },
+                "height": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 2174316
+                },
+                "inner_puzzle_hash": {
+                    "type": "string",
+                    "format": "hex",
+                    "example": "6b665c0e059050f71a1c3e8a7d5b58e4e1d7abbd02d937e9b5ab5abfd7f8eaba"
+                },
+                "launcher_id": {
+                    "type": "string",
+                    "format": "hex",
+                    "example": "f4dd6f4ec490974f7eb98223748f47340a9e9363b4c2dccc1932cdbbc54d03fd"
+                },
+                "melted": {
+                    "type": "boolean",
+                    "example": false
+                },
+                "parent_coin_id": {
+                    "type": "string",
+                    "format": "hex",
+                    "example": "e9676e8ce096c5be27dee2fbf2120054d206e4df2de9ef59c24a651d3c558c95"
+                },
+                "puzzle_hash": {
+                    "type": "string",
+                    "format": "hex",
+                    "example": "0a5a9c760970ebcc094c6f9faa3d9730f066c7a8f7450841a94fc4fd59229bc2"
+                }
+            }
+        },
+        "SyncedBlock": {
+            "type": "object",
+            "properties": {
+                "header_hash": {
+                    "type": "string",
+                    "format": "hex",
+                    "example": "9bb7135ae2b4a207807be2661007a89c8e3d0de1a58c0670da07b6099b9fedf7"
+                },
+                "height": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 2000000
                 }
             }
         }

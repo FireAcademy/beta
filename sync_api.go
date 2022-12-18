@@ -4,14 +4,19 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-// GetPuzzle godoc
-// @Summary returns the stored puzzle for a given puzzle_hash
-// @Description Beta stores all revealed inner puzzles of singletons. Use this method to get it from the corresponding puzzle hash. The puzzle will be returned as a hex string.
-// @Tags Puzzle
+type _ struct {
+	Success bool `json:"success" example:"true"`
+	Results int `json:"results" example:"1"`
+	SyncedBlock SyncedBlock `json:"synced_block"`
+} // @name GetPeakSyncedBlockResponse
+
+// GetPeakSyncedBlock godoc
+// @Summary returns the peak synced block
+// @Description Beta constantly syncs to the blockchain by fetching the latest blocks. This function returns information about the latest processed block (the one with the biggest 'height' value).
+// @Tags Sync
 // @Accept json
 // @Produce json
-// @Param Body body GetPuzzleArgs true "The inner puzzle hash"
-// @Success 200 {object} GetPuzzleResponse
+// @Success 200 {object} GetPeakSyncedBlockResponse
 // @Failure 401 {object} NoAPIKeyResponse
 // @Failure 500 {object} ErrorResponse
 // @Security ApiKeyAuth
@@ -28,9 +33,27 @@ func GetPeakSyncedBlock(c *fiber.Ctx) error {
 }
 
 type GetSyncedBlockArgs struct {
-	Height uint32 `json: "height"`   
-}
+	Height uint32 `json:"height" example:"2000000"`   
+} // @name GetSyncedBlockArgs
 
+type _ struct {
+	Success bool `json:"success" example:"true"`
+	Results int `json:"results" example:"1"`
+	SyncedBlock SyncedBlock `json:"synced_block"`
+} // @name GetSyncedBlockResponse
+
+// GetSyncedBlock godoc
+// @Summary returns block for given height
+// @Description Beta constantly syncs to the blockchain by fetching the latest blocks. This function returns information about the block at the given height.
+// @Tags Sync
+// @Accept json
+// @Produce json
+// @Param Body body GetSyncedBlockArgs true "The height"
+// @Success 200 {object} GetSyncedBlockResponse
+// @Failure 401 {object} NoAPIKeyResponse
+// @Failure 500 {object} ErrorResponse
+// @Security ApiKeyAuth
+// @Router /get_synced_block [post]
 func GetSyncedBlock(c *fiber.Ctx) error {
 	args := new(GetSyncedBlockArgs)
 	if err := c.BodyParser(args); err != nil {
@@ -47,10 +70,28 @@ func GetSyncedBlock(c *fiber.Ctx) error {
 }
 
 type GetSyncedBlocksArgs struct {
-	Start_height uint32 `json: "start"` 
-	End_height uint32 `json: "end"`   
-}
+	Start_height uint32 `json:"start" example:"2000000"` 
+	End_height uint32 `json:"end" example:"2000001"`
+}// @name GetSyncedBlocksArgs
 
+type _ struct {
+	Success bool `json:"success" example:"true"`
+	Results int `json:"results" example:"1"`
+	SyncedBlocks []SyncedBlock `json:"synced_blocks"`
+} // @name GetSyncedBlocksResponse
+
+// GetSyncedBlocks godoc
+// @Summary returns blocks for given range
+// @Description Beta constantly syncs to the blockchain by fetching the latest blocks. This function returns information about the blocks with height in [start, end).
+// @Tags Sync
+// @Accept json
+// @Produce json
+// @Param Body body GetSyncedBlocksArgs true "The start and end heights"
+// @Success 200 {object} GetSyncedBlocksResponse
+// @Failure 401 {object} NoAPIKeyResponse
+// @Failure 500 {object} ErrorResponse
+// @Security ApiKeyAuth
+// @Router /get_synced_blocks [post]
 func GetSyncedBlocks(c *fiber.Ctx) error {
 	args := new(GetSyncedBlocksArgs)
 	if err := c.BodyParser(args); err != nil {
