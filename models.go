@@ -26,6 +26,6 @@ type SingletonState struct {
 
 type Puzzle struct {
 	PuzzleHash string `gorm:"column:puzzle_hash;primary_key"`
-	Puzzle     string `gorm:"column:puzzle;type:bytea;NOT NULL"`
+	Puzzle     []byte `gorm:"column:puzzle;type:bytea;NOT NULL"`
 }
 

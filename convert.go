@@ -1,6 +1,10 @@
 package main
 
-import "github.com/gofiber/fiber/v2"
+import (
+	"encoding/hex"
+
+	"github.com/gofiber/fiber/v2"
+)
 
 func SyncedBlockToJSON(sb SyncedBlock) fiber.Map {
 	return fiber.Map{
@@ -26,6 +30,6 @@ func SingletonStateToJSON(ss SingletonState) fiber.Map {
 func PuzzleToJSON(p Puzzle) fiber.Map {
 	return fiber.Map{
 		"puzzle_hash": p.PuzzleHash,
-		"puzzle": p.Puzzle,
+		"puzzle": hex.EncodeToString(p.Puzzle),
 	}
 }
